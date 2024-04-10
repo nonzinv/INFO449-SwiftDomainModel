@@ -93,21 +93,46 @@ public class Job {
 // Person
 //
 public class Person {
-    public var firstName: String
-    public var lastName: String
-    public var age: Int
-    public var job: Job?
-    public var spouse: Person?
-
-    public init(firstName: String, lastName: String, age: Int) {
-        self.firstName = firstName
-        self.lastName = lastName
-        self.age = age
+    var firstName: String
+    var lastName: String
+    var age: Int
+    private var _job: Job?
+    private var _spouse: Person?
+    
+    var job: Job? {
+            get { return _job }
+            set {
+                if age >= 16 {
+                    _job = newValue
+                } else {
+                    _job = nil
+                }
+            }
+        }
+    var spouse: Person? {
+        get { return _spouse }
+        set {
+            if age >= 21 {
+                _spouse = newValue
+            } else {
+                _spouse = nil
+            }
+        }
     }
-
-    public func toString() -> String {
-        return "[Person: firstName: \(firstName) lastName: \(lastName) age: \(age) job: \(job?.title ?? "nil") spouse: \(spouse?.firstName ?? "nil")]"
+    init(firstName: String, lastName: String, age: Int, job: Job? = nil, spouse: Person? = nil) {
+            self.firstName = firstName
+            self.lastName = lastName
+            self.age = age
+            self._job = nil
+            self._spouse = nil
+            self.job = job
+            self.spouse = spouse
+        }
+    
+    func toString() -> String {
+        return "[Person: firstName:\(firstName) lastName:\(lastName) age:\(age) job:\(String(describing: job)) spouse:\(String(describing: spouse))]"
     }
+    
 }
 
 ////////////////////////////////////
